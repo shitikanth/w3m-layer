@@ -37,11 +37,10 @@
         (message "The point is not link.")
    (cond ((string-match "/\\/www\\.youtube\\.com\\/watch\/?" link)
           (message (concat "loading from youtube..." link))
-          (call-process "mpv" nil nil nil link))
+          (start-process "youtube" nil "mpv" link))
          ((string-match "/\\/www\\.bilibili\\.com\\/video\/" link)
             (message (concat "loading from bilibili..." link))
-            (call-process "bilidan" nil nil nil link)))
-   (message "Sorry, Playback error. please check url."))))
+            (call-process "bilidan" nil nil nil link))))))
 
 (defun v/w3m-copy-link ()
   (interactive)
