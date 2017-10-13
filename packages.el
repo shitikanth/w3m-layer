@@ -133,4 +133,72 @@
             w3m-output-coding-system 'utf-8
             w3m-terminal-coding-system 'utf-8))))
 
+(defun sk/init-w3m ()
+  (use-package w3m
+    :init
+    (progn
+      (setq w3m-filter-configuration
+            (append sk/w3m-additional-filters w3m-filter-configuration)))))
+
+(defun sk/w3m-filter-livemint (url)
+  "Filter cruft for livemint.com"
+  (w3m-filter-delete-regions
+   url
+   "<div class=\"lg-device\">"
+   "<div class=\"clearfix wrapper\""
+   nil t)
+  (w3m-filter-delete-regions
+   url
+   "<div class=\"subscribe-box\">"
+   "</div>"))
+
+(defun sk/w3m-filter-ndtv (url)
+  "Filter cruft for ndtv.com"
+  (w3m-filter-delete-regions
+   url
+   "<div class=\"nglobalnav\">"
+   "</div>")
+  (w3m-filter-delete-regions
+   url
+   "<div class=\"gnavigation\">"
+   "</div>")
+  (w3m-filter-delete-regions
+   url
+   "<div class=\"topnav_cont\">"
+   "</div>")
+  (w3m-filter-delete-regions
+   url
+   "<div class=\"topmenu\""
+   "<div class=\"hide_cont"
+   nil t))
+
+(defun sk/w3m-filter-youtube (url)
+  "Filter cruft from youtube.com"
+  (w3m-filter-delete-regions
+   url
+   "<ytd-masthead"
+   "/ytd-masthead>"))
+
+(defun sk/w3m-filter-python-docs (url)
+  "Filter cruft from youtube.com"
+  (w3m-filter-delete-regions
+   url
+   "<div class=\"related\""
+   "<div class=\"document\""
+   nil t))
+
+(setq sk/w3m-additional-filters
+      '((t
+         "Filter for Livemint"
+         "\\`https?://www\\.livemint\\.com/" sk/w3m-filter-livemint)
+        (t
+         "Filter for NDTV"
+         "\\`https?://www\\.ndtv\\.com/" sk/w3m-filter-ndtv)
+        (t
+         "Filter for Python docs"
+         "\\`https?://docs\\.python\\.org/" sk/w3m-filter-python-docs)
+        (t
+         "Filter for Youtube"
+         "\\`https?://www\\.youtube\\.com/" sk/w3m-filter-youtube)))
+
 ;;; packages.el ends here
