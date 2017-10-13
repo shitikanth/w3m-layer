@@ -114,6 +114,7 @@
           "wm" 'w3m-view-url-with-external-browser
           "wb" 'helm-w3m-bookmarks
           "wB" 'w3m-bookmark-view
+          (kbd "C-v") 'evil-visual-block
         ))))
 
 (with-eval-after-load 'w3m
