@@ -64,7 +64,9 @@
   (interactive
    (list (read-string "Enter website address (default: google.com):" nil nil "google.com" nil )))
   (w3m-goto-url
-   (concat "http://" url)))
+   (if (string-match-p "^https?://" url)
+       url
+     (concat "http://" url))))
 
 (defun v/w3m-open-url-new-session (url)
   "Opens url in new w3m session with 'http://' appended"
