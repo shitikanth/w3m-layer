@@ -119,6 +119,23 @@
    "<div class=\"document\""
    nil t))
 
+(defun sk/w3m-filter-github (url)
+  "Filter cruft from github.com"
+  (w3m-filter-delete-regions
+   url
+   "<div class=\"position-relative"
+   "<div role=\"main"
+   nil t)
+  (w3m-filter-delete-regions
+   url
+   "<ul class=\"pagehead-actions"
+   "/ul>")
+  (w3m-filter-delete-regions
+   url
+   "<div class=\"file-navigation"
+   "<div class=\"file-wrap"
+   nil t))
+
 (setq sk/w3m-additional-filters
       '((t
          "Filter for Livemint"
@@ -131,7 +148,10 @@
          "\\`https?://docs\\.python\\.org/" sk/w3m-filter-python-docs)
         (t
          "Filter for Youtube"
-         "\\`https?://www\\.youtube\\.com/" sk/w3m-filter-youtube)))
+         "\\`https?://www\\.youtube\\.com/" sk/w3m-filter-youtube)
+        (t
+         "Filter for Github"
+         "\\`https?://github\\.com/" sk/w3m-filter-github)))
 
 (defun sk/w3m-external-view-current-url ()
   (interactive)
